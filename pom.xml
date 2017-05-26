@@ -1,0 +1,60 @@
+<!--
+Author: Kate Labeeva
+
+TicTacToe project
+-->
+
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.klabeeva.test</groupId>
+  <artifactId>TickTacToe</artifactId>
+  <version>1</version>
+  <url>https://github.com/klabeeva/TicTacToe</url>
+  <dependencies>
+    <!--  Gson: Java to Json conversion -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <directory>build/TicTacToe</directory>
+    <resources>
+      <resource>
+        <directory>build/TicTacToe/classes/</directory>
+      </resource>
+    </resources>
+    <finalName>TicTacToe-1.0</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.1
+        </version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+          <archive>
+            <index>true</index>
+            <manifestEntries>
+              <Implementation-Title>TicTacToe</Implementation-Title>
+              <Implementation-Version>TicTacToe-1.0</Implementation-Version>
+              <Implementation-Vendor>klabeeva@yahoo.com</Implementation-Vendor>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
