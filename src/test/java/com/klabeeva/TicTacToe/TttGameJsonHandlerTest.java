@@ -99,36 +99,82 @@ public class TttGameJsonHandlerTest {
      *********************/
     @Test
     public void testDiagonalMiddleWinLeft() {
-    	testAlgorithm(TttBoardStrings.kBeforeDiagonalMiddleWinLeft,
+    	testAlgorithmCreatingInput(TttBoardStrings.kBeforeDiagonalMiddleWinLeft,
     			TttBoardStrings.kDiagonalLeftWinRes);
     }
 
     @Test
     public void testDiagonalMiddleWinRight() {
-    	testAlgorithm(TttBoardStrings.kBeforeDiagonalMiddleWinRight,
+    	testAlgorithmCreatingInput(TttBoardStrings.kBeforeDiagonalMiddleWinRight,
     			TttBoardStrings.kDiagonalRightWinRes);
     }
 
     @Test
     public void testDiagonalLowCornerLeft() {
-    	testAlgorithm(TttBoardStrings.kBeforeDiagonalLowCornerWinLeft,
+    	testAlgorithmCreatingInput(TttBoardStrings.kBeforeDiagonalLowCornerWinLeft,
     			TttBoardStrings.kDiagonalLeftWinRes);
     }
 
     @Test
     public void testDiagonalUpperCornerWinRight() {
-    	testAlgorithm(TttBoardStrings.kBeforeDiagonalUpperCornerWinRight,
+    	testAlgorithmCreatingInput(TttBoardStrings.kBeforeDiagonalUpperCornerWinRight,
     			TttBoardStrings.kDiagonalRightWinRes);
     }
 
     @Test
     public void testDiagonalMiddlePrevetnLossLeft() {
-    	testAlgorithm(TttBoardStrings.kBeforeDiagonalMiddleWinLeft,
+    	testAlgorithmCreatingInput(TttBoardStrings.kBeforeDiagonalMiddleWinLeft,
     			TttBoardStrings.kDiagonalLeftWinRes);
     }
 
     
-    // utils
+    /**********************
+     * rows tests    *
+     *********************/
+    @Test
+    public void testRowTopMiddleWin() {
+    	testAlgorithm(TttBoardStrings.kRowTopMiddleWin,
+    			TttBoardStrings.kRowTopMiddleWinRes);
+    }
+    @Test
+    public void testRowTopMiddlePrevetnLoss() {
+    	testAlgorithm(TttBoardStrings.kRowTopMiddlePreventLoss,
+    			TttBoardStrings.kRowTopMiddlePreventLossRes);
+    }
+    
+    @Test
+    public void testRowLowLeftWin() {
+    	testAlgorithm(TttBoardStrings.kRowLowLeftWin,
+    			TttBoardStrings.kRowLowLeftWinRes);
+    }
+    @Test
+    public void testRowLowLeftPrevetnLoss() {
+    	testAlgorithm(TttBoardStrings.kRowLowLeftPreventLoss,
+    			TttBoardStrings.kRowLowLeftPreventLossRes);
+    }
+    
+
+    /**********************
+     * column tests    *
+     *********************/
+    @Test
+    public void testColumnLeftMiddleWin() {
+    	testAlgorithm(TttBoardStrings.kColumnLeftMiddleWin,
+    			TttBoardStrings.kColumnLeftMiddleWinRes);
+    }
+    @Test
+    public void testColumnLeftMiddlePrevetnLoss() {
+    	testAlgorithm(TttBoardStrings.kColumnLeftMiddlePreventLoss,
+    			TttBoardStrings.kColumnLeftMiddlePreventLossRes);
+    }
+    // TODO more column tests
+    
+    // TODO test 'draw' game 
+
+    // TODO test play 'winning' game 
+     
+    
+    // utils  -------------------------
     
     // creates input data from board string
     String getGameStr (boolean bCross, String boardStr) throws TttException {
@@ -153,7 +199,7 @@ public class TttGameJsonHandlerTest {
      * used for algorithm testing
      * @throws TttException 
      */
-     void testAlgorithm(final String kStr, final String resStr) {
+     void testAlgorithmCreatingInput(final String kStr, final String resStr) {
     	try {
     		String str = getGameStr(true, kStr);
     		byte[] content = str.getBytes();
@@ -170,6 +216,28 @@ public class TttGameJsonHandlerTest {
         }
     }
      
+     /**
+      * util for testing;
+      * gets input data as q param
+      * used for algorithm testing
+      * @throws TttException 
+      */
+      void testAlgorithm(final String kInStr, final String resStr) {
+     	try {
+     		byte[] content = kInStr.getBytes();
+
+     		Reader reader = new InputStreamReader(new ByteArrayInputStream(content));
+     		Writer writer = new StringWriter();
+         
+             TttGameJsonHandler.playGame(reader, writer);
+             String gameData = writer.toString();
+             assertEquals(resStr, gameData);
+         } catch (Exception e) {
+             fail("Exception in game handler: " + e.getMessage());
+             return;
+         }
+     }
+      
      // util used for required TttException
      void testProperTttException(final String strWithError) throws Exception {
      	thrown.expect(TttException.class);
